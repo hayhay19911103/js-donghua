@@ -1,0 +1,39 @@
+/*引入获取样式的原因：再添加border后，offset属性出现偏差*/
+<!DOCTYPE html>
+<html>
+<head>
+	<title>获取样式</title>
+	<meta charset="utf-8">
+<style type="text/css">
+#div1{width: 200px;height:200px;background:#f00;border:1px solid #000;font-size: 12px;color: white;}
+</style>
+<script type="text/javascript">
+ window.onload=function(){
+ 	startMove();
+ };
+ function startMove(){
+ 	setInterval(function(){
+ 		var oDiv=document.getElementById('div1');
+	 	//考虑、oDiv.style.width=oDiv.offsetWidth-1+'px';201，203
+  		//oDiv.style.width=parseInt(getStyle(oDiv,'width'))-1+'px';
+		oDiv.style.width=parseInt(getStyle(oDiv,'width'))-1+'px';
+ 		//oDiv.style.fontSize=parseInt(getStyle(oDiv,'fontSize'))+1+'px';
+	oDiv.style.fontSize=parseInt(getStyle(oDiv,'fontSize'))+1+'px'
+ 	},30);
+ }
+ //获取样式函数不做详细讲解
+ function getStyle(obj,attr){
+ 	if (obj.currentStyle) {
+ 		return obj.currentStyle[attr];//针对IE浏览器	
+ 	} else {
+ 		return getComputedStyle(obj,false)[attr];//针对火狐浏览器
+ 
+ 	}
+ }
+</script>
+
+</head>
+<body>
+ <div id="div1" >font-size</div>
+</body>
+</html>

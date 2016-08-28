@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>opacty--单物体</title>
+	<style type="text/css">
+	body,div{margin:0;padding: 0}
+	#div1{width: 200px;height: 200px;background:red;
+		filter:alpha(opacity:30);opacity:0.3;}
+
+	/*实现当鼠标移入的时候，透明度变为100；鼠标移出透明度为30*/
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oDiv=document.getElementById('div1');
+			oDiv.onmouseover=function(){
+				startMove(100);	
+			};
+			oDiv.onmouseout=function(){
+				startMove(30);	
+			};
+	};
+	var timer=null;
+	var alpha=30;
+	function startMove(target){
+	    var oDiv=document.getElementById('div1');
+	    clearInterval(timer);//清除定时器以防止叠加
+	    timer=setInterval(function(){
+	    	var speed=0;
+	    	if (alpha> target) {
+	    		speed=-10;
+	    	} else {
+	    		speed=10;
+	    	}
+	    	if (alpha==target) {
+	    		clearInterval(timer);
+	    	} else {
+	    		alpha+=speed;
+	    		oDiv.style.filter='alpha(opacity:'+alpha+')';//基于IE
+	    		oDiv.style.opacity=alpha/100;//基于火狐，
+	    	}
+	    },'30');
+	}
+	</script>
+</head>
+<body>
+<div id="div1"></div>
+</body>
+</html>

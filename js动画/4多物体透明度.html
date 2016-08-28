@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>opacty--多物体</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	body,div{margin:0;padding: 0}
+	div{width: 200px;height: 200px;background:red;
+	filter:alpha(opacity:30);
+	opacity:0.3;
+	margin:10px;float:left;}
+	/*实现当鼠标移入的时候，透明度变为100；鼠标移出透明度为30*/
+	</style>
+<script type="text/javascript">
+	window.onload=function(){
+		var oDiv=document.getElementsByTagName('div');
+		for (var i = 0; i < oDiv.length; i++) {
+			oDiv[i].alpha=30;//多物体运动alpha不能共用
+			oDiv[i].onmouseover=function () {
+				startMove(this,100);
+			};
+			oDiv[i].onmouseout=function () {
+				startMove(this,30);
+			};
+
+		}
+	};
+	//var timer;
+	//var alpha=30;
+	function startMove(obj,target){
+		clearInterval(obj.timer);
+		obj.timer=setInterval(function(){
+			var speed=0;
+			if (obj.alpha>target) {
+				speed=-10;
+			} else {
+				speed=10;
+			}
+			if (obj.alpha==target) {
+				clearInterval(obj.timer);
+			} else {
+				obj.alpha+=speed;
+				obj.style.filter='alpha(opacity:'+obj.alpha+');'//ie
+				obj.style.opacity=obj.alpha/100;//firefox
+
+			}
+		},30)
+	}
+</script>
+
+</head>
+<body>
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3"></div>
+<div id="div4"></div>
+</body>
+</html>
